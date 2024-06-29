@@ -1,14 +1,17 @@
 import express from 'express'
-import mongoose from 'mongoose';
-import dotenv from 'dotenv'
+import mongoose from "mongoose";
+import {port}   from './config/environment.mjs';
+import usersRouter from './routes/users.mjs'
 const app = express();
-const PORT = 3001;
 
-dotenv.config()
+app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('hello world')
-});
+
+app.use('/api/users' , usersRouter)
+
+
+
+
 
 const connectDB = async () => {
     try {
@@ -20,9 +23,11 @@ const connectDB = async () => {
   }
   
   connectDB().then(() => {
-    app.listen(PORT, () => {
-      console.log(`Example app listening on port ${PORT}`);
+    app.listen(port, () => {
+      console.log(`Example app listening on port ${port}`);
     });
   }).catch((err) => {
     console.error(err);
   }); 
+
+ 
